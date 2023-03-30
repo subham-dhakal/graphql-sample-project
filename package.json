@@ -1,0 +1,21 @@
+{
+  "name": "apollo-graphql-test",
+  "version": "1.0.0",
+  "main": "server.mjs",
+  "author": "subham dhakal",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.mjs"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.5.0",
+    "config": "^3.3.9",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
+    "sequelize": "^6.30.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "pg": "^8.10.0"
+  }
+}
