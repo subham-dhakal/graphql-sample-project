@@ -17,15 +17,11 @@ exports.list = async (req, res) => {
             include : [{
                 model : Book,
                 as : 'books'
-            }]
+            }],
         });
-        res.json(authors.data);
+        res.json(authors);
     } catch(err){
         console.log(err);
         res.status(400).json(err);
     }
 }
-
-// exports.getById = async(req, res) => {
-
-// }

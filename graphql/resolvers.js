@@ -53,10 +53,8 @@ const resolvers = {
     },
     getAllAuthors : async() => {
         try {
-            // console.log('hey');
             const authors = await axios.get(`${REST_API_URL}/author/list`)
-            console.log(authors);
-            return authors;
+            return authors.data;
         }
         catch(err){
             console.log(err);
@@ -93,10 +91,11 @@ const resolvers = {
   Mutation : {
     addAuthor : async (root, {name, email}) => {
         try{
-            const authors =  await axios.post(`${REST_API_URL}/author/create`, {name, email},{
+            const authors =  await axios.post(`${REST_API_URL}/author/create`, {name, email},
+              {
                 headers: {
-                  'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                  }
               });
             return authors.data;
         }
@@ -105,7 +104,18 @@ const resolvers = {
         }
     },
     addBook : async (root, {title, authorId, ISBN}) => {
-        return await Book.create({title, authorId, ISBN});
+        try{
+            const books =  await axios.post(`${REST_API_URL}/books/create`, {title, authorId, ISBN},
+              {
+                headers: {
+                    'Content-Type': 'application/json',
+                  }
+              });
+            return books.data;
+        }
+        catch(err){
+            console.log(err);
+        }
     },
     updateAuthor : async (root, {id, name, email}) => {
         const updatedAuthor = await Author.update({name, email}, {where : {id}});

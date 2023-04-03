@@ -37,9 +37,6 @@ const server = new ApolloServer({
 });
 await server.start();
 
-// app.get("/", (_, res) => {
-// res.send("Hello API");
-// });
 
 app.use("/books", booksRoutes);
 app.use("/author", authorRoutes);
