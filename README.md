@@ -5,7 +5,8 @@ Check sequelize.js and add your database configuration
 # Setup
 - create config folder
 - create default.json inside config folder
- - add the following line inside default.json```
+ - add the following line inside default.json
+ ```
  {
   "db": {
     "username": "",
