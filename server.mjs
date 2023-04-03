@@ -7,12 +7,13 @@ import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import './model/associations.js';
+import booksRoutes from './routes/books.routes.js';
+import authorRoutes from './routes/author.routes.js';
 
 import sequelize from './sequelize.js';
 
 import  resolvers  from './graphql/resolvers.js';
 import  typeDefs  from './graphql/schema.js';
-import { log } from 'console';
 
 
 // const server = new ApolloServer({
@@ -36,19 +37,23 @@ const server = new ApolloServer({
 });
 await server.start();
 
-app.get("/", (_, res) => {
-res.send("Hello API");
-});
+// app.get("/", (_, res) => {
+// res.send("Hello API");
+// });
+
+app.use("/books", booksRoutes);
+app.use("/author", authorRoutes);
 
 app.use(
-  '/graphql',
   cors(),
   bodyParser.json(),
   expressMiddleware(server),
 );
 
+
+
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-console.log(`🚀 Server ready at http://localhost:4000/graphql`);
+console.log(`🚀 Server ready at http://localhost:4000`);
 
 sequelize.authenticate().then(() => {
     console.log(`Database Connected`);

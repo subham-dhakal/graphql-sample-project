@@ -1,17 +1,12 @@
-const Book  = require("../model/books");
-const Author  = require("../model/author");
-
+const REST_API_URL = 'http://localhost:4000';
+const axios = require("axios");
 
 const resolvers = {
   Query: {
     getAllBooks : async () => {
         try {
-            return await Book.findAll({
-                include : [{
-                    model : Author,
-                    as : 'author'
-                }]
-            });  
+          const books = await axios.get(`${REST_API_URL}/books`);
+          return books;
         }
         catch(err){
             console.log(err);
@@ -58,12 +53,10 @@ const resolvers = {
     },
     getAllAuthors : async() => {
         try {
-            return await Author.findAll({
-                include : [{
-                    model : Book,
-                    as : 'books'
-                }]
-            });
+            // console.log('hey');
+            const authors = await axios.get(`${REST_API_URL}/author/list`)
+            console.log(authors);
+            return authors;
         }
         catch(err){
             console.log(err);
@@ -99,7 +92,17 @@ const resolvers = {
   },
   Mutation : {
     addAuthor : async (root, {name, email}) => {
-        return await Author.create({name, email});
+        try{
+            const authors =  await axios.post(`${REST_API_URL}/author/create`, {name, email},{
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+            return authors.data;
+        }
+        catch(err){
+            console.log(err);
+        }
     },
     addBook : async (root, {title, authorId, ISBN}) => {
         return await Book.create({title, authorId, ISBN});
